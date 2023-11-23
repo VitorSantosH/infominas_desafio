@@ -33,7 +33,8 @@ const Home = () => {
     const [state, setState] = useState({
         loaded: false,
         heroes: [],
-        cardsComponent: []
+        cardsComponent: [],
+        inputPesquisa: "",
     });
 
     useEffect(() => {
@@ -48,6 +49,7 @@ const Home = () => {
 
     }, [state.loaded, state.heroes])
 
+    // requisição dados herois
     async function getHeroes() {
 
         await axios.get(apiUrl)
@@ -72,6 +74,7 @@ const Home = () => {
 
     }
 
+    // criando cards dos herois 
     function createCards() {
 
         let n = 0
@@ -79,8 +82,8 @@ const Home = () => {
         const cards = state.heroes.map(hero => {
 
             n++
-            let {intelligence, strength, speed, durability, power, combat} = hero.powerstats
-            const totalPower = (intelligence + strength + speed + durability + power + combat) 
+            let { intelligence, strength, speed, durability, power, combat } = hero.powerstats
+            const totalPower = (intelligence + strength + speed + durability + power + combat)
 
             return (
                 <div
@@ -88,9 +91,9 @@ const Home = () => {
                     key={hero.name + n}
                 >
                     <img src={hero.images.sm} alt="" />
-                    <div>
+                    <span>
                         {hero.biography.fullName || hero.name}
-                    </div>
+                    </span>
                     <div>
                         {totalPower}
                     </div>
@@ -105,6 +108,29 @@ const Home = () => {
 
     }
 
+    function handleInputChange(event) {
+
+        const inputValue = event.target.value;
+        const filtredHeroes = heroes.filter(item => {
+
+            if (item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+                item.biography.fullName.toLowerCase().includes(inputValue.toLowerCase()) || !inputValue) {
+                return item
+            }
+
+        }
+
+        );
+
+        return setState({
+            ...state,
+            inputPesquisa: inputValue,
+            heroes: filtredHeroes
+
+        })
+
+
+    }
     /**
      *  <div>
             <p>Valor Redux: {valorRedux} palavra: {teste}</p>
@@ -120,7 +146,18 @@ const Home = () => {
             <p>
                 Heroes length {heroes.length}
             </p>
-            {state.cardsComponent}
+            <input
+                type="text"
+                name="pesquisa"
+                id=""
+                value={state.inputPesquisa}
+                onChange={e => {
+                    return handleInputChange(e);
+                }}
+            />
+            <div className="heroesContainer">
+                {state.cardsComponent}
+            </div>
         </div>
     );
 };

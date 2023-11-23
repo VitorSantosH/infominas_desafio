@@ -1,0 +1,28 @@
+.home {
+    display: flex;
+    box-sizing: border-box;
+}
+
+.heroesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; 
+    align-items: stretch;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.hero img {
+    max-height: 240px;
+    width: 160px;
+    height: auto;;
+}
+
+.hero span {
+    max-width: 160px;
+}
