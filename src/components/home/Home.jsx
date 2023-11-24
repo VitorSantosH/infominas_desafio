@@ -35,6 +35,7 @@ const Home = () => {
         heroes: [],
         cardsComponent: [],
         inputPesquisa: "",
+        selectedHero: [],
     });
 
     useEffect(() => {
@@ -47,7 +48,7 @@ const Home = () => {
             createCards();
         }
 
-    }, [state.loaded, state.heroes])
+    }, [state.loaded, state.heroes, state.selectedHero[0], state.selectedHero[1]])
 
     // requisição dados herois
     async function getHeroes() {
@@ -55,8 +56,6 @@ const Home = () => {
         console.log('aqui')
         await axios.get(apiUrl)
             .then(response => {
-
-                console.log(response)
 
                 dispatch(setHeroes(response.data))
 
@@ -81,20 +80,6 @@ const Home = () => {
     function createCards() {
 
         let n = 0
-
-        // armazena valores unicos
-        /**
-         *   const valoresUnicos = new Set();
-  
-          state.heroes.forEach(objeto => {
-              valoresUnicos.add(objeto.connections.groupAffiliation);
-          });
-  
-          // Agora você pode acessar os valores únicos e contar quantos são
-          const quantidadeDeVariacoes = valoresUnicos.size;
-  
-          console.log(quantidadeDeVariacoes)
-         */
 
         const cards = state.heroes.map((hero, i) => {
 
@@ -131,12 +116,24 @@ const Home = () => {
                     break;
             }
 
+            console.log("includes: " + state.selectedHero.includes(i))
+
             return (
                 <div
-                    className={`hero ${hero.biography.alignment == "good" ? 'good' : 'bad'}
-                            ${hero.appearance.gender == "Male" ? 'male' : 'female'}`}
+                    className={`hero 
+                            ${hero.biography.alignment == "good" ? 'good' : 'bad'}
+                            ${hero.appearance.gender == "Male" ? 'male' : 'female'}
+                            ${state.selectedHero.includes(i + 1) ? 'selected' : ''}
+                            `}
 
                     key={hero.name + n}
+
+                    onClick={e => {
+
+                        // define os herois em "foco"
+                        handleSelectecHero(i + 1)
+
+                    }}
 
                 >
                     <img src={hero.images.sm} alt="" />
@@ -155,6 +152,35 @@ const Home = () => {
             ...state,
             cardsComponent: cards
         })
+
+    }
+
+    function handleSelectecHero(num) {
+
+
+        if(!num) return
+
+        if (state.selectedHero.length >= 2) {
+
+            let newArray = state.selectedHero
+            newArray[1] = newArray[0]
+            newArray[0] = num;
+
+            return setState(prevState => ({
+                ...prevState,
+                selectedHero: newArray,
+            }));
+
+        } else {
+
+            let newArray = state.selectedHero
+            newArray.push(num)
+
+            return setState(prevState => ({
+                ...prevState,
+                selectedHero: newArray,
+            }));
+        }
 
     }
 

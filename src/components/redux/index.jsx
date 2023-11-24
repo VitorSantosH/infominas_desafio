@@ -22,7 +22,6 @@ const stateRedux = createSlice({
           }
          */
         setHeroes: (state, action) => {
-            console.log(action.payload)
             state.heroes = action.payload
         }
     }

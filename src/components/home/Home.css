@@ -10,7 +10,7 @@
     justify-content: space-around;
     align-items: stretch;
     height: auto;
-  
+
 }
 
 .hero {
@@ -22,7 +22,7 @@
     cursor: pointer;
 }
 
-.hero:hover{
+.hero:hover {
 
     filter: brightness(1.5);
 
@@ -36,12 +36,13 @@
     margin-bottom: 8px;
 
 }
+
 .hero span {
     max-width: 160px;
     padding: 5px;
 }
 
-.hero  i {
+.hero i {
     padding: 5px;
 }
 
@@ -117,4 +118,16 @@
     border-color: #fbfdff;
     border: solid 2px rgba(255, 255, 255, 0.5);
     box-shadow: 0 0 8px rgb(202, 204, 210);
+}
+
+
+.selected {
+    border: 0.2rem solid rgba(32, 243, 123, 0.5)!important;
+    border-radius: 4%!important;
+    background-color: rgba(32, 243, 123, 0.1)!important;
+}
+
+.selected img  {
+    border: 0.1rem solid rgba(32, 243, 123, 0.5) !important; 
+    box-shadow: 0 0 10px 5px rgba(32, 243, 123, 0.5) !important;
 }
