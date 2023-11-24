@@ -52,8 +52,11 @@ const Home = () => {
     // requisição dados herois
     async function getHeroes() {
 
+        console.log('aqui')
         await axios.get(apiUrl)
             .then(response => {
+
+                console.log(response)
 
                 dispatch(setHeroes(response.data))
 
@@ -79,23 +82,70 @@ const Home = () => {
 
         let n = 0
 
-        const cards = state.heroes.map(hero => {
+        // armazena valores unicos
+        /**
+         *   const valoresUnicos = new Set();
+  
+          state.heroes.forEach(objeto => {
+              valoresUnicos.add(objeto.connections.groupAffiliation);
+          });
+  
+          // Agora você pode acessar os valores únicos e contar quantos são
+          const quantidadeDeVariacoes = valoresUnicos.size;
+  
+          console.log(quantidadeDeVariacoes)
+         */
+
+        const cards = state.heroes.map((hero, i) => {
 
             n++
+
             let { intelligence, strength, speed, durability, power, combat } = hero.powerstats
-            const totalPower = (intelligence + strength + speed + durability + power + combat)
+            const heroAttributes = { intelligence, strength, speed, durability, power, combat } = hero.powerstats
+            const atributoComMaiorValor = Object.keys(heroAttributes).reduce((a, b) => heroAttributes[a] > heroAttributes[b] ? a : b);
+
+            let classIcon
+
+            switch (atributoComMaiorValor) {
+                case 'intelligence':
+                    classIcon = 'fa-lightbulb-o';
+                    break;
+                case 'strength':
+                    classIcon = 'fa-hand-rock-o';
+                    break;
+                case 'speed':
+                    classIcon = 'fa-tachometer';
+                    break;
+                case 'durability':
+                    classIcon = 'fa-shield';
+                    break;
+                case 'power':
+                    classIcon = 'fa-bolt';
+                    break;
+                case 'combat':
+                    classIcon = 'fa-fighter-jet';
+                    break;
+                default:
+                    // Caso padrão se nenhum dos atributos corresponder
+                    classIcon = 'fa-question'; // ou outra classe padrão
+                    break;
+            }
 
             return (
                 <div
-                    className="hero"
+                    className={`hero ${hero.biography.alignment == "good" ? 'good' : 'bad'}
+                            ${hero.appearance.gender == "Male" ? 'male' : 'female'}`}
+
                     key={hero.name + n}
+
                 >
                     <img src={hero.images.sm} alt="" />
                     <span>
                         {hero.biography.fullName || hero.name}
                     </span>
                     <div>
-                        {totalPower}
+                        <i className={`fa ${classIcon}`}></i>
+                        {heroAttributes[atributoComMaiorValor]}
                     </div>
                 </div>
             )
@@ -146,15 +196,19 @@ const Home = () => {
             <p>
                 Heroes length {heroes.length}
             </p>
-            <input
-                type="text"
-                name="pesquisa"
-                id=""
-                value={state.inputPesquisa}
-                onChange={e => {
-                    return handleInputChange(e);
-                }}
-            />
+            <div className="containerPesquisa">
+                <i className="fa fa-search">
+                    <input
+                        type="text"
+                        name="pesquisa"
+                        id=""
+                        value={state.inputPesquisa}
+                        onChange={e => {
+                            return handleInputChange(e);
+                        }}
+                    />
+                </i>
+            </div>
             <div className="heroesContainer">
                 {state.cardsComponent}
             </div>

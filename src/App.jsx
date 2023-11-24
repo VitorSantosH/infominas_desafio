@@ -1,7 +1,7 @@
 import React from 'react';
 import '@mui/material/CssBaseline';
 import './App.css';
-
+import './assets/font-awesome/css/font-awesome.css'
 
 // redux
 import { Provider } from 'react-redux';

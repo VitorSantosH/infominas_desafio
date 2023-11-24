@@ -1,13 +1,16 @@
 .home {
     display: flex;
     box-sizing: border-box;
+    transition: all 400ms;
 }
 
 .heroesContainer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around; 
+    justify-content: space-around;
     align-items: stretch;
+    height: auto;
+  
 }
 
 .hero {
@@ -15,14 +18,103 @@
     flex-direction: column;
     justify-content: center;
     padding: 1rem;
+    margin: 2rem 5px;
+    cursor: pointer;
+}
+
+.hero:hover{
+
+    filter: brightness(1.5);
+
 }
 
 .hero img {
     max-height: 240px;
     width: 160px;
-    height: auto;;
-}
+    height: auto;
+    border-radius: 4%;
+    margin-bottom: 8px;
 
+}
 .hero span {
     max-width: 160px;
+    padding: 5px;
+}
+
+.hero  i {
+    padding: 5px;
+}
+
+.male.good {
+    border: 0.2rem solid rgba(255, 255, 255, 0.5);
+    border-radius: 4%;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.male.good img {
+    border: 0.1rem solid white;
+    box-shadow: 0 0 10px 5px white;
+}
+
+
+.male.bad {
+    border: 0.2rem solid rgba(246, 79, 79, 0.5);
+    border-radius: 4%;
+    background-color: rgba(246, 79, 79, 0.1);
+}
+
+.male.bad img {
+    border: 0.1rem solid rgb(246, 79, 79);
+    box-shadow: 0 0 10px 5px rgb(246, 79, 79);
+}
+
+.female.good {
+    border: 0.2rem solid rgba(255, 215, 0, 0.5);
+    border-radius: 4%;
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+.female.good img {
+    border: 0.1rem solid #ffd700;
+    box-shadow: 0 0 10px 5px #ffd700;
+}
+
+.female.bad {
+    border: 0.2rem solid rgba(128, 0, 0, 0.5);
+    border-radius: 4%;
+    background-color: rgba(128, 0, 0, 0.1);
+}
+
+.female.bad img {
+    border: 0.1rem solid #800000;
+    box-shadow: 0 0 10px 5px #800000;
+}
+
+.containerPesquisa {
+    display: flex;
+    height: 40px;
+    width: max-content;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.containerPesquisa input {
+    margin: 0 1rem;
+    border: none;
+    background: transparent;
+    height: 20px;
+}
+
+
+.containerPesquisa input:focus, .containerPesquisa input:active {
+    outline: none;
+}
+
+.containerPesquisa:focus-within, .containerPesquisa:active {
+    outline: none;
+    border-color: #fbfdff;
+    border: solid 2px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 8px rgb(202, 204, 210);
 }
