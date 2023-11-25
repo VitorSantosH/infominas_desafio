@@ -126,7 +126,7 @@ const Home = () => {
                     className={`hero 
                             ${hero.biography.alignment == "good" ? 'good' : 'bad'}
                             ${hero.appearance.gender == "Male" ? 'male' : 'female'}
-                            ${state.selectedHero.includes(i + 1) ? 'selected' : ''}
+                            ${state.selectedHero.includes(hero) ? 'selected' : ''}
                             `}
 
                     key={hero.name + n}
@@ -134,14 +134,14 @@ const Home = () => {
                     onClick={e => {
 
                         // define os herois em "foco"
-                        handleSelectecHero(i + 1)
+                        handleSelectecHero(hero)
 
                     }}
 
                 >
                     <img src={hero.images.sm} alt="" />
                     <span>
-                        {hero.biography.fullName || hero.name}
+                        { hero.name || hero.biography.fullName}
                     </span>
                     <div>
                         <i className={`fa ${classIcon}`}></i>
@@ -159,17 +159,17 @@ const Home = () => {
     }
 
     // selecionando herois
-    function handleSelectecHero(num) {
+    function handleSelectecHero(hero) {
 
 
-        if (!num) return
+    
+        if(state.selectedHero.includes(hero)) return  
 
         if (state.selectedHero.length >= 2) {
 
             let newArray = state.selectedHero
             newArray[1] = newArray[0]
-            newArray[0] = num;
-
+            newArray[0] = hero;
 
             dispatch(setSelectedHeroes(newArray))
 
@@ -181,7 +181,7 @@ const Home = () => {
         } else {
 
             let newArray = state.selectedHero
-            newArray.push(num)
+            newArray.push(hero)
 
             dispatch(setSelectedHeroes(newArray))
 
@@ -205,9 +205,11 @@ const Home = () => {
 
     }
 
+    // filtrando herois
     function handleInputChange(event) {
 
         const inputValue = event.target.value;
+        
         const filtredHeroes = heroes.filter(item => {
 
             if (item.name.toLowerCase().includes(inputValue.toLowerCase()) ||

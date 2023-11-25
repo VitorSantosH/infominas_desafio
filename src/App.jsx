@@ -19,7 +19,10 @@ function App() {
     <Provider store={store}>
       <BatleArena />
       <div className='app'>
-        <h1>Desafio de Heróis: Confronto Direto com um Clique!</h1>
+
+        <div className="titleP">
+          <h1>Desafio de Heróis: Confronto Direto com um Clique!</h1>
+        </div>
 
         <Home />
 

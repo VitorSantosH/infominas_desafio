@@ -7,6 +7,7 @@
   flex-direction: column;
   justify-content: flex-start;
   min-height: 100vh;
+ 
 
 }
 
@@ -45,3 +46,22 @@
 .read-the-docs {
   color: #888;
 }
+
+
+@media only screen and (max-width: 1000px) {
+
+  .titleP h1 {
+    font-size: 35px;
+  }
+
+}
+
+
+@media only screen and (max-width: 420px) {
+
+  .titleP h1 {
+    font-size: 25px;
+  }
+
+}
+

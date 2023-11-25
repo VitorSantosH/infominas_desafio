@@ -27,12 +27,14 @@ const stateRedux = createSlice({
         },
         setSelectedHeroes: (state, action) => {
         
+            
+
             const newState = {
                 ...state, 
-                selectedHeroes: action.payload ?  [...action.payload] : []
+                selectedHeroes: action.payload ?  [...action.payload.slice(0, 2)] : []
             }
 
-            console.log("Estado após a atualização:", newState);
+           // console.log("Estado após a atualização:", newState);
 
             return newState;
         }

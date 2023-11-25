@@ -132,3 +132,30 @@
     border: 0.1rem solid rgba(32, 243, 123, 0.5) !important; 
     box-shadow: 0 0 10px 5px rgba(32, 243, 123, 0.5) !important;
 }
+
+
+
+@media only screen and (max-width: 485px) {
+
+    .containerPesquisa {
+        width: 100%;
+    }
+
+    .hero img {
+        max-height: 360px;
+        width: 240px;
+        height: auto;
+    }
+
+  }
+
+
+  @media only screen and (max-width: 350px) {
+
+    .hero img {
+        max-height: 300px;
+        width: 200px;
+        height: auto;
+    }
+
+  }
