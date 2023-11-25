@@ -6,7 +6,8 @@ import { createSlice, configureStore } from '@reduxjs/toolkit'
 const stateRedux = createSlice({
     name: "stateRedux",
     initialState: {
-        heroes: []
+        heroes: [],
+        selectedHeroes: []
     },
     reducers: {
         /***
@@ -23,6 +24,17 @@ const stateRedux = createSlice({
          */
         setHeroes: (state, action) => {
             state.heroes = action.payload
+        },
+        setSelectedHeroes: (state, action) => {
+        
+            const newState = {
+                ...state, 
+                selectedHeroes: action.payload ?  [...action.payload] : []
+            }
+
+            console.log("Estado após a atualização:", newState);
+
+            return newState;
         }
     }
 })
@@ -30,7 +42,7 @@ const stateRedux = createSlice({
 
 // export const { incremented, decremented, mudeTeste } = stateRedux.actions
 
-export const { setHeroes } = stateRedux.actions
+export const { setHeroes, setSelectedHeroes } = stateRedux.actions
 
 const store = configureStore({
     reducer: stateRedux.reducer

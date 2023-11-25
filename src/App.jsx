@@ -9,6 +9,7 @@ import store from './components/redux';
 
 // components
 import Home from './components/home/Home';
+import BatleArena from './components/battleArena/BattleArena';
 
 
 
@@ -16,12 +17,13 @@ function App() {
 
   return (
     <Provider store={store}>
-      <div>
-        <h1>Aplicativo React com Redux</h1>
-        <Home />
-      </div>
+      <BatleArena />
+      <div className='app'>
+        <h1>Desafio de Heróis: Confronto Direto com um Clique!</h1>
 
-      <h1> teste</h1>
+        <Home />
+
+      </div>
     </Provider>
   );
 

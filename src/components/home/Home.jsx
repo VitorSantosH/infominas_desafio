@@ -5,12 +5,13 @@ import axios from 'axios'
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import store, { setHeroes } from "../redux";
-// import store, { mudeTeste, incremented, decremented } from "../redux";
+import store, { setHeroes, setSelectedHeroes } from "../redux";
+
 
 
 
 const Home = () => {
+
 
 
     // redux
@@ -18,14 +19,9 @@ const Home = () => {
     const heroes = useSelector((state) => {
         return state.heroes
     })
-    /**
-     *  const valorRedux = useSelector((state) => {
-         return state.value
-     });
-     const teste = useSelector((state) => {
-         return state.teste
-     });
-     */
+    const selectedHeroes = useSelector((state) => {
+        return state.selectedHeroes
+    });
 
     // url get heroes 
     const apiUrl = 'http://homologacao3.azapfy.com.br/api/ps/metahumans';
@@ -48,12 +44,19 @@ const Home = () => {
             createCards();
         }
 
-    }, [state.loaded, state.heroes, state.selectedHero[0], state.selectedHero[1]])
+       if(selectedHeroes != state.selectedHero) {
+
+        return setState(prevState => ({
+            ...prevState, 
+            selectedHero: [...selectedHeroes]
+        }))
+       }
+
+    }, [state.loaded, state.heroes, state.selectedHero[0], state.selectedHero[1], selectedHeroes])
 
     // requisição dados herois
     async function getHeroes() {
 
-        console.log('aqui')
         await axios.get(apiUrl)
             .then(response => {
 
@@ -66,6 +69,7 @@ const Home = () => {
                 })
             })
             .catch(err => {
+
                 console.log(err)
 
                 return setState({
@@ -116,7 +120,6 @@ const Home = () => {
                     break;
             }
 
-            console.log("includes: " + state.selectedHero.includes(i))
 
             return (
                 <div
@@ -155,16 +158,20 @@ const Home = () => {
 
     }
 
+    // selecionando herois
     function handleSelectecHero(num) {
 
 
-        if(!num) return
+        if (!num) return
 
         if (state.selectedHero.length >= 2) {
 
             let newArray = state.selectedHero
             newArray[1] = newArray[0]
             newArray[0] = num;
+
+
+            dispatch(setSelectedHeroes(newArray))
 
             return setState(prevState => ({
                 ...prevState,
@@ -176,11 +183,25 @@ const Home = () => {
             let newArray = state.selectedHero
             newArray.push(num)
 
+            dispatch(setSelectedHeroes(newArray))
+
             return setState(prevState => ({
                 ...prevState,
                 selectedHero: newArray,
             }));
         }
+
+    }
+
+    // resetando selecao
+    function resetSelectedHeroes() {
+
+        setState(prevState => ({
+            ...prevState,
+            selectedHero: []
+        }))
+
+        return dispatch(setSelectedHeroes())
 
     }
 
@@ -207,21 +228,12 @@ const Home = () => {
 
 
     }
-    /**
-     *  <div>
-            <p>Valor Redux: {valorRedux} palavra: {teste}</p>
-            <button onClick={() => dispatch(incremented())}>Incrementar</button>
-            <button onClick={() => dispatch(decremented())}>Decrementar</button>
-            <button onClick={() => dispatch(mudeTeste('teste'))}>teste</button>
-        </div>
-     */
+
 
     return (
         <div className="Home">
-            Home
-            <p>
-                Heroes length {heroes.length}
-            </p>
+
+
             <div className="containerPesquisa">
                 <i className="fa fa-search">
                     <input
@@ -235,9 +247,13 @@ const Home = () => {
                     />
                 </i>
             </div>
+            
+               
             <div className="heroesContainer">
                 {state.cardsComponent}
             </div>
+
+
         </div>
     );
 };
