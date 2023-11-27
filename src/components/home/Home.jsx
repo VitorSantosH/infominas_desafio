@@ -24,7 +24,7 @@ const Home = () => {
     });
 
     // url get heroes 
-    const apiUrl = 'http://homologacao3.azapfy.com.br/api/ps/metahumans';
+    const apiUrl = 'https://appdeliveryrapido.com.br/heros' //'http://localhost:8050/heros';
 
     const [state, setState] = useState({
         loaded: false,
